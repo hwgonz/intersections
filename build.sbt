@@ -3,7 +3,7 @@ val scala2Version = "2.13.8"
 lazy val root = (project in file("."))
   .settings(
     name := "intersections", resolvers += "jitpack".at("https://jitpack.io"),
-    organization := "org.test",
+    organization := "org.test.intersection",
     version := "0.0.1-SNAPSHOT",
     scalaVersion := scala2Version,
     scalacOptions ++= Seq(
@@ -19,7 +19,7 @@ lazy val root = (project in file("."))
     assembly / assemblyJarName := "intersections.jar",
     libraryDependencies ++= Dependencies.coreScala2Dependencies
       ++ Dependencies.loggingDependencies ++ Dependencies.apiDependencies ++ Dependencies.testDependencies
-      ++ Dependencies.streamingDependencies ++ Dependencies.databaseDependencies ++ Dependencies.awsSDKDependencies
+      ++ Dependencies.streamingDependencies ++ Dependencies.databaseDependencies
   )
 
 

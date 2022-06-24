@@ -57,7 +57,6 @@ object Dependencies {
 
   lazy val testDependencies = Seq(
     "org.scalatest" %% "scalatest" % "3.2.3" % Test, //IntegrationTest,
-    "org.tpolecat" %% "doobie-scalatest" % "0.10.0" % Test
   )
 
   lazy val databaseDependencies = Seq(
@@ -68,10 +67,5 @@ object Dependencies {
     "com.github.cb372" %% "cats-retry" % "2.1.1",
   )
 
-  lazy val awsSDKDependencies = Seq(
-    "software.amazon.awssdk" % "dynamodb" % "2.17.209", // DynamoDB support
-    "org.scanamo" %% "scanamo" % "1.0.0-M15",
-    "org.scanamo" %% "scanamo-cats-effect" % "1.0.0-M15"
-  )
 
 }
