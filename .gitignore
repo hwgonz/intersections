@@ -11,6 +11,8 @@ idea
 
 # general
 *.class
+*.json
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
