@@ -1,20 +1,28 @@
 package org.test.intersections
 
+import cats.data.EitherT
 import cats.effect.IO
 import io.circe._
 import io.circe.parser._
 
 object Processor {
 
-  def processData(data: String, sourceNode: String, endNode: String): IO[Either[Error, TrafficMeasurement]] =
+  def processData(data: String, source: String, end: String): IO[Either[Exception, Option[List[Node]]]] =
     for {
       result <- IO(decode[TrafficData](data))
       process <- result match {
         case Left(err) => IO(Left(err))
         case Right(value) => {
           val averages = calculateAverages(value)
-          //val res = SearchGraph.shortestPath(SearchGraph.getGraphFromTrafficMeasurement(averages))()
-          IO(Right(calculateAverages(value)))
+          val startNode = Node.toNode(source)
+          val endNode = Node.toNode(end)
+          (startNode, endNode) match {
+            case (Some(start), Some(end)) => {
+              val res = SearchGraph.shortestPath(SearchGraph.getGraphFromTrafficMeasurement(averages))(start, end)
+              IO(println(s"Unique Nodes are: ${Processor.getAllUniqueNodesFromMeasurement(averages)}")) *> IO(Right(res))
+            }
+            case _ => IO(Left(new Exception("Bad start or end nodes...")))
+          }
         }
       }
     } yield process

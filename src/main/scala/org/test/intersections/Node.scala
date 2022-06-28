@@ -9,7 +9,7 @@ case class EdgeGraph(adjacent: Map[Node, List[DirectedEdge]] = Map.empty)
 object Node {
   def toNode(value: String): Option[Node] = {
     val letterPattern = "([a-zA-Z])".r
-    val numberPattern = "([1-9][1-9]?)".r
+    val numberPattern = "([1-9][0-9]?)".r
     val firstLetter = value.charAt(0) match {
       case letterPattern(c) => Some(c.toString)
       case _ => None
