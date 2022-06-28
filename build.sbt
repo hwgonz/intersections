@@ -1,4 +1,6 @@
-val scala2Version = "2.13.8"
+val scala2Version = "2.12.4"
+//val scala2Version = "2.13.8"
+// "-Ymacro-annotations",
 
 lazy val root = (project in file("."))
   .settings(
@@ -8,7 +10,6 @@ lazy val root = (project in file("."))
     scalaVersion := scala2Version,
     scalacOptions ++= Seq(
         "-deprecation",
-        "-Ymacro-annotations",
     ),
     assembly / assemblyMergeStrategy := {
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
@@ -18,8 +19,7 @@ lazy val root = (project in file("."))
     },
     assembly / assemblyJarName := "intersections.jar",
     libraryDependencies ++= Dependencies.coreScala2Dependencies
-      ++ Dependencies.loggingDependencies ++ Dependencies.apiDependencies ++ Dependencies.testDependencies
-      ++ Dependencies.streamingDependencies ++ Dependencies.databaseDependencies
+      ++ Dependencies.loggingDependencies ++ Dependencies.testDependencies
   )
 
 

@@ -22,7 +22,10 @@ object Dependencies {
     "com.typesafe" % "config" % "1.4.1",
     "com.github.pureconfig" %% "pureconfig" % "0.14.0",
     "com.github.pureconfig" %% "pureconfig-cats-effect" % "0.14.0",
-    "com.github.pureconfig" %% "pureconfig-enum" % "0.14.0"
+    "com.github.pureconfig" %% "pureconfig-enum" % "0.14.0",
+
+    // Priority maps
+    "de.ummels" %% "scala-prioritymap" % "1.0.0"
   )
 
   lazy val loggingDependencies = Seq(
