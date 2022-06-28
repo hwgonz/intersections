@@ -1,3 +1,56 @@
-package org.test.intersections object SearchGraph {
+package org.test.intersections
+
+import de.ummels.prioritymap.PriorityMap
+
+object SearchGraph {
+
+  type Graph[N] = N => Map[N, BigDecimal]
+
+  //def dijkstra[N](g: Graph[N])(source: N): (Map[N, BigDecimal], Map[N, N]) = ???
+
+  def shortestPath[N](g: Graph[N])(source: N, target: N):
+  Option[List[N]] = {
+    val pred = dijkstra3(g)(source)._2
+    if (pred.contains(target) || source == target)
+      Some(iterateRight(target)(pred.get))
+    else None
+  }
+
+  def getGraphFromTrafficMeasurement(trafficMeasurement: TrafficMeasurement): Graph[Node] = { node =>
+    trafficMeasurement.measurements.filter(
+      measurement => measurement.startAvenue == node.avenue &&
+        measurement.startStreet == node.street)
+      .map(measurement => (Node(measurement.endAvenue, measurement.endStreet), measurement.transitTime))
+      .toMap
+  }
+
+  private def iterateRight[N](x: N)(f: N => Option[N]): List[N] = {
+    def go(x: N, acc: List[N]): List[N] = f(x) match {
+      case None => x :: acc
+      case Some(y) => go(y, x :: acc)
+    }
+
+    go(x, List.empty)
+  }
+
+  private def dijkstra3[N](g: Graph[N])(source: N):
+  (Map[N, BigDecimal], Map[N, N]) = {
+    def go(active: PriorityMap[N, BigDecimal], res: Map[N, BigDecimal], pred: Map[N, N]):
+    (Map[N, BigDecimal], Map[N, N]) =
+      if (active.isEmpty) (res, pred)
+      else {
+        val (node, cost) = active.head
+        val neighbours = for {
+          (n, c) <- g(node) if !res.contains(n) &&
+            cost + c < active.getOrElse(n, Int.MaxValue)
+        } yield n -> (cost + c)
+        val preds = neighbours mapValues (_ => node)
+        go(active.tail ++ neighbours, res + (node -> cost), pred ++ preds)
+      }
+
+    go(PriorityMap(source -> 0), Map.empty, Map.empty)
+  }
 
 }
+
+
