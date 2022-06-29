@@ -11,7 +11,7 @@ object Node {
     val letterPattern = "([a-zA-Z])".r
     val numberPattern = "([1-9][0-9]?)".r
     val firstLetter = value.charAt(0) match {
-      case letterPattern(c) => Some(c.toString)
+      case letterPattern(c) => Some(c.toString.toUpperCase)
       case _ => None
     }
     val restNumber = value.substring(1) match {

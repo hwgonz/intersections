@@ -6,14 +6,14 @@ object SearchGraph {
 
   type Graph[N] = N => Map[N, BigDecimal]
 
-  //def dijkstra[N](g: Graph[N])(source: N): (Map[N, BigDecimal], Map[N, N]) = ???
-
   def shortestPath[N](g: Graph[N])(source: N, target: N):
-  Option[List[N]] = {
-    val pred = dijkstra3(g)(source)._2
+  (Option[BigDecimal], Option[List[N]]) = {
+    val result = dijkstra3(g)(source)
+    val pred = result._2
+    val totalTime = result._1
     if (pred.contains(target) || source == target)
-      Some(iterateRight(target)(pred.get))
-    else None
+      (totalTime.get(target), Some(iterateRight(target)(pred.get)))
+    else (None, None)
   }
 
   def getGraphFromTrafficMeasurement(trafficMeasurement: TrafficMeasurement): Graph[Node] = { node =>
@@ -50,6 +50,7 @@ object SearchGraph {
 
     go(PriorityMap(source -> 0), Map.empty, Map.empty)
   }
+
 
 }
 

@@ -16,17 +16,15 @@ object Intersections extends IOApp {
     }
     _ <- IO(println("Enter start intersection:"))
     sourceNode <- IO(readLine())
-    _ <- IO(println(s"Source node is ${Node.toNode(sourceNode)}"))
+    //_ <- IO(println(s"Source node is ${Node.toNode(sourceNode)}"))
     _ <- IO(println("Enter end intersection:"))
     endNode <- IO(readLine())
-    _ <- IO(println(s"End node is ${Node.toNode(endNode)}"))
+    //_ <- IO(println(s"End node is ${Node.toNode(endNode)}"))
     output <- Processor.processData(inputData, sourceNode, endNode)
-    /*allNodes <- output match {
+    _ <- output match {
       case Left(err) => IO(Left(err))
-      case Right(value) => IO(Processor.getAllUniqueNodesFromMeasurement(value))
-    }*/
-    //_ <- IO(println(s"You said $file"))
-    _ <- IO(println(s"Shortest Path is $output"))
+      case Right(value) => IO(println(s"Total transit time is ${value._1}")) *> IO(println(s"Shortest path is ${value._2}"))
+    }
   } yield ExitCode.Success
 
 }
