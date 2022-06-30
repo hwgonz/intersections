@@ -2,6 +2,8 @@ package org.test.intersections
 
 import de.ummels.prioritymap.PriorityMap
 
+//import scala.collection.mutable
+
 object SearchGraph {
 
   type Graph[N] = N => Map[N, BigDecimal]
@@ -24,7 +26,7 @@ object SearchGraph {
       .toMap
   }
 
-  private def iterateRight[N](x: N)(f: N => Option[N]): List[N] = {
+  def iterateRight[N](x: N)(f: N => Option[N]): List[N] = {
     def go(x: N, acc: List[N]): List[N] = f(x) match {
       case None => x :: acc
       case Some(y) => go(y, x :: acc)
@@ -33,8 +35,7 @@ object SearchGraph {
     go(x, List.empty)
   }
 
-  private def dijkstra3[N](g: Graph[N])(source: N):
-  (Map[N, BigDecimal], Map[N, N]) = {
+  def dijkstra3[N](g: Graph[N])(source: N): (Map[N, BigDecimal], Map[N, N]) = {
     def go(active: PriorityMap[N, BigDecimal], res: Map[N, BigDecimal], pred: Map[N, N]):
     (Map[N, BigDecimal], Map[N, N]) =
       if (active.isEmpty) (res, pred)
@@ -51,6 +52,26 @@ object SearchGraph {
     go(PriorityMap(source -> 0), Map.empty, Map.empty)
   }
 
+  /*private def dijkstra1[N](g: Graph[N])(source: N):
+  (Map[N, BigDecimal], Map[N, N]) = {
+    val active = mutable.Set(source)
+    val res = mutable.Map(source -> BigDecimal(0))
+    val pred = mutable.Map.empty[N, N]
+    while (active.nonEmpty) {
+      val node = active.minBy(res)
+      active -= node
+      val cost = res(node)
+      for ((n, c) <- g(node)) {
+        val cost1 = cost + c
+        if (cost1 < res.getOrElse(n, Int.MaxValue)) {
+          active += n
+          res += (n -> cost1)
+          pred += (n -> node)
+        }
+      }
+    }
+    (res.toMap, pred.toMap)
+  }*/
 
 }
 

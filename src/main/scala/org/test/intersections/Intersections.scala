@@ -16,10 +16,8 @@ object Intersections extends IOApp {
     }
     _ <- IO(println("Enter start intersection:"))
     sourceNode <- IO(readLine())
-    //_ <- IO(println(s"Source node is ${Node.toNode(sourceNode)}"))
     _ <- IO(println("Enter end intersection:"))
     endNode <- IO(readLine())
-    //_ <- IO(println(s"End node is ${Node.toNode(endNode)}"))
     output <- Processor.processData(inputData, sourceNode, endNode)
     _ <- output match {
       case Left(err) => IO(Left(err))

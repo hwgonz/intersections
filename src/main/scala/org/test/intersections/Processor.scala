@@ -1,8 +1,8 @@
 package org.test.intersections
 
-import cats.data.EitherT
+
 import cats.effect.IO
-import io.circe._
+
 import io.circe.parser._
 
 object Processor {

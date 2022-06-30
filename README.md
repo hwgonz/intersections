@@ -4,6 +4,10 @@ This service calculates the Shortest Path between 2 intersections and also retur
 
 Usage
 
+In the project's root folder, use sbt run command or you can also use sbt assembly to generate an uber jar and run:
+
+java -cp target/scala-2.12/intersections.jar org.test.intersections.Intersections
+
 First, put the input data (like sample-data.json) in the project's root folder
 
 Then use sbt run
